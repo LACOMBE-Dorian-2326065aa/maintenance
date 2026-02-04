@@ -46,10 +46,14 @@
                     <input matInput formControlName="nom" placeholder="Ex: 100m Sprint">
                   </mat-form-field>
 
-                  <mat-radio-group formControlName="type" class="epreuve-type">
-                    <mat-radio-button value="individuel">Individuel</mat-radio-button>
-                    <mat-radio-button value="equipe">Équipe</mat-radio-button>
-                  </mat-radio-group>
+                  <div class="epreuve-type-container">
+                    <span class="type-label">Format :</span>
+                    <mat-radio-group formControlName="type" class="epreuve-type">
+                      <mat-radio-button value="individuel">Individuel</mat-radio-button>
+                      <mat-radio-button value="equipe">Équipe</mat-radio-button>
+                      <mat-radio-button value="equipe">Indiv en équipe</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
                   
                   <button mat-icon-button color="warn" type="button" (click)="removeEpreuve(i, j)">
                     <mat-icon>remove_circle</mat-icon>
