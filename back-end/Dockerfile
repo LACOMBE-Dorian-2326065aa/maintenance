@@ -39,4 +39,4 @@ RUN mkdir -p var && chmod -R 777 var
 
 EXPOSE 8000
 
-CMD ["symfony", "serve", "--no-tls", "--allow-http", "--port=8000"]
+CMD ["symfony", "serve", "--no-tls", "--allow-http", "--listen-ip=0.0.0.0", "--port=8000"]
