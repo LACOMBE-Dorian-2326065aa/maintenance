@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: maintenance_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - APP_VAR_DIR=/app/var
+      - DATABASE_URL=sqlite:////app/var/app.db
+    volumes:
+      - ./back-end:/app
+      - /app/vendor
+    working_dir: /app
+    command: symfony serve --no-tls --allow-http
+    networks:
+      - maintenance_network
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: maintenance_frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm start
+    networks:
+      - maintenance_network
+
+networks:
+  maintenance_network:
+    driver: bridge
