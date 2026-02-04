@@ -1,0 +1,88 @@
+<div class="container">
+  <h2>Créer un nouveau Championnat</h2>
+  
+  <form [formGroup]="championnatForm" (ngSubmit)="onSubmit()">
+    
+    <mat-card class="main-card">
+      <mat-card-header>
+        <mat-card-title>Informations Générales</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nom du Championnat</mat-label>
+          <input matInput formControlName="nom" placeholder="Ex: Championnat d'été 2026">
+          <mat-error *ngIf="championnatForm.get('nom')?.hasError('required')">
+            Le nom est requis
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <div formArrayName="competitions" class="competitions-list">
+      <h3>Compétitions</h3>
+      
+      <div *ngFor="let comp of competitions.controls; let i = index" [formGroupName]="i" class="competition-item">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Compétition {{i + 1}}</mat-card-title>
+            <button mat-icon-button color="warn" type="button" (click)="removeCompetition(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Nom de la Compétition</mat-label>
+              <input matInput formControlName="nom" placeholder="Ex: Tournoi Senior">
+            </mat-form-field>
+
+            <div formArrayName="epreuves" class="epreuves-list">
+              <h4>Épreuves</h4>
+              
+              <div *ngFor="let epreuve of getEpreuves(i).controls; let j = index" [formGroupName]="j" class="epreuve-item">
+                <div class="epreuve-inputs">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nom de l'épreuve</mat-label>
+                    <input matInput formControlName="nom" placeholder="Ex: 100m Sprint">
+                  </mat-form-field>
+
+                  <div class="epreuve-type-container">
+                    <span class="type-label">Format :</span>
+                    <mat-radio-group formControlName="type" class="epreuve-type">
+                      <mat-radio-button value="individuel">Individuel</mat-radio-button>
+                      <mat-radio-button value="equipe">Équipe</mat-radio-button>
+                      <mat-radio-button value="equipe">Indiv en équipe</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  
+                  <button mat-icon-button color="warn" type="button" (click)="removeEpreuve(i, j)">
+                    <mat-icon>remove_circle</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <button mat-stroked-button color="primary" type="button" (click)="addEpreuve(i)">
+                <mat-icon>add</mat-icon> Ajouter une épreuve
+              </button>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="add-competition-btn">
+        <button mat-raised-button color="primary" type="button" (click)="addCompetition()">
+          <mat-icon>add</mat-icon> Ajouter une Compétition
+        </button>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="accent" type="submit" [disabled]="championnatForm.invalid">
+        Créer le Championnat
+      </button>
+    </div>
+
+  </form>
+</div>
+
