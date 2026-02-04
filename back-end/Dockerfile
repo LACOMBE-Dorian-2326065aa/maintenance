@@ -25,10 +25,11 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash && \
 WORKDIR /app
 
 # Copy composer files
-COPY composer.json composer.lock* ./
+COPY composer.json composer.lock ./
 
 # Install dependencies
-RUN composer install --no-interaction --no-scripts
+RUN composer install --no-interaction --no-scripts --ignore-platform-reqs || \
+    composer install --no-interaction --no-scripts
 
 # Copy application
 COPY . .
