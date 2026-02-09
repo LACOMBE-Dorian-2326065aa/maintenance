@@ -94,10 +94,10 @@ export class CreationChampionnat implements OnInit {
 
       console.log('Valid Form. Sending:', payload);
       
-      this.http.post('/api/championnat', payload).subscribe({
+      this.http.post('/api/championship', payload).subscribe({
         next: (res) => {
           console.log('Championship created', res);
-          // Navigate back to championship list if we have sportId, else simple back or home
+          alert('Championnat, compétitions et épreuves créés avec succès');
           if (this.sportId) {
             this.router.navigate(['/sports', this.sportId, 'championnats']);
           } else {
@@ -106,7 +106,6 @@ export class CreationChampionnat implements OnInit {
         },
         error: (err) => {
           console.error('Error creating championship', err);
-          // For now, if 404/500 because backend route is missing, we might want to alert user or just log
           alert('Erreur lors de la création (le backend n\'est peut-être pas prêt)');
         }
       });

@@ -121,6 +121,144 @@ label {
   margin-bottom: 5px;
 }
 
+/* List CRUD Styles */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.add-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+.btn-save {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-item {
+  display: flex !important; /* Override standard card display if needed */
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  
+  .item-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex: 1;
+    color: #333;
+  }
+
+  .item-meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-right: 20px;
+  }
+}
+
+.item-edit {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  
+  input {
+    flex: 1;
+    margin: 0;
+    padding: 5px 10px;
+  }
+  
+  .edit-actions {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #e9ecef;
+    color: $primary-color;
+  }
+  
+  &.save {
+    color: #28a745;
+  }
+  
+  &.cancel {
+    color: #dc3545;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 40px;
+}
+
+.back-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.

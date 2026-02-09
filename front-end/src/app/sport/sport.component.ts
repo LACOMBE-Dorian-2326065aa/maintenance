@@ -39,6 +39,7 @@ export class SportComponent implements OnInit {
       
       this.http.post(url, {}).subscribe({
         next: () => {
+          alert('Sport ajouté avec succès');
           this.newSportName = '';
           this.loadSports(); 
         },

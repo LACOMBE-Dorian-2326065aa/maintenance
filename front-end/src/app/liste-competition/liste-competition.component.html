@@ -1,0 +1,102 @@
+<div class="container">
+  <h2>Compétitions</h2>
+
+  <div class="actions">
+    <button class="primary" *ngIf="!isAdding" (click)="startAdd()">+ Ajouter une compétition</button>
+  </div>
+
+  <div class="add-form" *ngIf="isAdding">
+    <input type="text" [(ngModel)]="newName" placeholder="Nom de la compétition" (keyup.enter)="saveNew()">
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="cancelAdd()">Annuler</button>
+      <button class="btn-save" (click)="saveNew()" [disabled]="!newName">Enregistrer</button>
+    </div>
+  </div>
+
+  <div class="list" *ngIf="competitions.length > 0; else noData">
+    <div class="card app-card list-item-wrapper" *ngFor="let item of competitions">
+      
+      <!-- Competition Row -->
+      <div class="list-item" (click)="toggleDetails(item, $event)" [class.expanded]="item.expanded">
+        <div class="item-content" *ngIf="editingId !== item.id">
+          <span class="chevron" [class.rotated]="item.expanded">▶</span>
+          <span class="item-name">{{ item.name }}</span>
+          <div class="item-meta">{{ item.events_count }} épreuves</div>
+          <button class="btn-icon" (click)="startEdit(item, $event)" title="Modifier">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="item-edit" *ngIf="editingId === item.id">
+          <input type="text" [(ngModel)]="editName" (click)="$event.stopPropagation()" (keyup.enter)="saveEdit(item, $event)">
+          <div class="edit-actions">
+            <button class="btn-icon save" (click)="saveEdit(item, $event)" title="Valider">✓</button>
+            <button class="btn-icon cancel" (click)="cancelEdit($event)" title="Annuler">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events Expansion Panel -->
+      <div class="events-panel" *ngIf="item.expanded" (click)="$event.stopPropagation()">
+        
+        <div class="events-header">
+            <h4>Épreuves</h4>
+            <button class="btn-small-add" *ngIf="!item.isAddingEvent" (click)="startAddEvent(item, $event)">+ Ajouter épreuve</button>
+        </div>
+
+        <!-- Add Event Inline Form -->
+        <div class="add-event-inline" *ngIf="item.isAddingEvent">
+           <input type="text" [(ngModel)]="item.newEventName" placeholder="Nom de la nouvelle épreuve" (keyup.enter)="saveNewEvent(item)">
+           <button class="btn-icon save" (click)="saveNewEvent(item)">✓</button>
+           <button class="btn-icon cancel" (click)="cancelAddEvent(item)">✕</button>
+           <span class="info-text">Entrée pour ajouter</span>
+        </div>
+
+        <!-- Events List -->
+        <div class="events-list">
+            <div class="event-item" *ngFor="let evt of item.events">
+                <ng-container *ngIf="editingEventId !== evt.id">
+                    <span class="event-name">{{ evt.name }}</span>
+                    <div class="event-actions">
+                        <button class="btn-icon small" (click)="enableEditEvent(evt)">✎</button>
+                        <button class="btn-icon small delete" (click)="deleteEvent(evt, item)">🗑</button>
+                    </div>
+                </ng-container>
+                
+                <ng-container *ngIf="editingEventId === evt.id">
+                     <input type="text" [(ngModel)]="editEventName" (keyup.enter)="saveEditEvent(evt)">
+                     <button class="btn-icon save small" (click)="saveEditEvent(evt)">✓</button>
+                     <button class="btn-icon cancel small" (click)="cancelEditEvent()">✕</button>
+                </ng-container>
+            </div>
+            
+            <p class="no-events" *ngIf="!item.events || item.events.length === 0">Aucune épreuve</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p class="empty-state">Aucune compétition pour ce championnat.</p>
+  </ng-template>
+
+  <br>
+  <!-- Need to know sportId to go back properly, but browser back works. 
+       Or we could store navigation history, or pass sportId down. 
+       For now, a simple browser back approach via Location could work, 
+       but Angular way is better. 
+       However, we don't have sportId here unless we fetch the championship details first or pass it in route params.
+       Let's use Location.back() conceptually or just a generic back link.
+       The user didn't rigidly specify back link behavior, but good UX requires it.
+       If I want to link back to /sports/:id/championnats, I need the sport ID.
+       The getCompetitionsByChampionship endpoint returns simple list. 
+       I might need to fetch the championship itself to get the sport ID? 
+       Actually, `CompetitionController` returns championship info in `get_all` but `getCompetitionsByChampionship` returns simplied list.
+       Let's stick to "Retour" using browser history or just text saying "Retour".
+  -->
+  <a href="javascript:history.back()" class="back-link">← Retour</a>
+</div>
