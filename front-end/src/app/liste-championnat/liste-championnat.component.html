@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Championnats</h2>
+
+  <button class="create-btn" (click)="goToCreateChampionship()">Créer un championnat</button>
+
+  <div class="list" *ngIf="championships.length > 0; else noChampionships">
+    <div class="card" *ngFor="let champ of championships">
+      <h3>{{ champ.name }}</h3>
+      <p>Date de début: {{ champ.startDate | date }}</p>
+      <!-- Add other details as needed -->
+    </div>
+  </div>
+
+  <ng-template #noChampionships>
+    <p>Aucun championnat trouvé pour ce sport.</p>
+  </ng-template>
+
+  <br>
+  <a routerLink="/sports">Retour aux sports</a>
+</div>
