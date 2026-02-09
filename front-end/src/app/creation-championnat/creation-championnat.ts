@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-creation-championnat',
@@ -28,6 +30,11 @@ import { CommonModule } from '@angular/common';
 })
 export class CreationChampionnat implements OnInit {
   private fb = inject(FormBuilder);
+  private http = inject(HttpClient);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  sportId: number | null = null;
   
   championnatForm: FormGroup = this.fb.group({
     nom: ['', Validators.required],
@@ -36,6 +43,11 @@ export class CreationChampionnat implements OnInit {
 
   ngOnInit() {
     this.addCompetition();
+    this.route.queryParams.subscribe(params => {
+      if (params['sportId']) {
+        this.sportId = +params['sportId'];
+      }
+    });
   }
 
   get competitions(): FormArray {
@@ -74,8 +86,30 @@ export class CreationChampionnat implements OnInit {
 
   onSubmit() {
     if (this.championnatForm.valid) {
-      console.log(this.championnatForm.value);
-      // TODO: Envoyer au backend
+      const formValue = this.championnatForm.value;
+      const payload = {
+        ...formValue,
+        sportId: this.sportId
+      };
+
+      console.log('Valid Form. Sending:', payload);
+      
+      this.http.post('/api/championnat', payload).subscribe({
+        next: (res) => {
+          console.log('Championship created', res);
+          // Navigate back to championship list if we have sportId, else simple back or home
+          if (this.sportId) {
+            this.router.navigate(['/sports', this.sportId, 'championnats']);
+          } else {
+            this.router.navigate(['/']);
+          }
+        },
+        error: (err) => {
+          console.error('Error creating championship', err);
+          // For now, if 404/500 because backend route is missing, we might want to alert user or just log
+          alert('Erreur lors de la création (le backend n\'est peut-être pas prêt)');
+        }
+      });
     }
   }
 }

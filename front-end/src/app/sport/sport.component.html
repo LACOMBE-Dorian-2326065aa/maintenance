@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Liste des Sports</h2>
+
+  <div class="sport-list">
+    <div *ngFor="let sport of sports" class="sport-card" (click)="goToChampionships(sport.id)">
+      <h3>{{ sport.name }}</h3>
+      <span class="badge">{{ sport.type }}</span>
+    </div>
+  </div>
+
+  <div class="add-sport-form">
+    <h3>Ajouter un sport</h3>
+    <form (ngSubmit)="addSport()">
+      <div class="form-group">
+        <label for="name">Nom du sport</label>
+        <input type="text" id="name" [(ngModel)]="newSportName" name="name" required placeholder="Ex: Football">
+      </div>
+      
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" [(ngModel)]="newSportType" name="type">
+          <option *ngFor="let type of sportTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="!newSportName">Ajouter</button>
+    </form>
+  </div>
+</div>

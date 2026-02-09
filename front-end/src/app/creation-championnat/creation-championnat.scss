@@ -2,30 +2,11 @@ $primary-color: #00008b;
 $background-light: #f8f9fa;
 $border-color: #e0e0e0;
 
-.container {
-  padding: 40px 20px;
-  max-width: 80%;
-  margin: 0 auto;
-  font-family: 'Roboto', sans-serif;
-}
-
-h2 {
-  color: $primary-color;
-  font-weight: 300;
-  font-size: 2rem;
-  margin-bottom: 30px;
-  text-align: center;
-  border-bottom: 2px solid rgba($primary-color, 0.1);
-  padding-bottom: 15px;
-}
+// .container and h2 styles are now in global styles.scss
 
 mat-card {
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-  border: 1px solid $border-color;
+  // Global mat-card styles might be sufficient, but keeping specific overrides here if any distinctive ones exist
   margin-bottom: 24px;
-  background-color: white;
-  overflow: hidden;
 
   &.main-card {
     border-top: 4px solid $primary-color;
