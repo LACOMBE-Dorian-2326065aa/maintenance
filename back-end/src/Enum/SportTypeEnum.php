@@ -4,7 +4,7 @@ namespace App\Enum;
 
 enum SportTypeEnum: string
 {
-    case INDIVIDUAL = 'Individuel';
-    case COLLECTIVE = 'Collectif';
-    case INDIVIDUAL_TEAM = 'Individuel en équipe';
+    case INDIVIDUAL = 'INDIVIDUAL';
+    case COLLECTIVE = 'COLLECTIVE';
+    case INDIVIDUAL_TEAM = 'INDIVIDUAL_TEAM';
 }
