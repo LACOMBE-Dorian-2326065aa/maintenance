@@ -31,7 +31,7 @@ export class ListeChampionnatComponent implements OnInit {
   }
 
   loadChampionships(sportId: number) {
-    this.http.get<any[]>(`/api/championnat/sport/${sportId}`).subscribe({
+    this.http.get<any[]>(`/api/championship/sport/${sportId}`).subscribe({
       next: (data) => {
         this.championships = data;
       },

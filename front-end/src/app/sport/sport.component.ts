@@ -14,9 +14,9 @@ import { Router } from '@angular/router';
 export class SportComponent implements OnInit {
   sports: any[] = [];
   newSportName: string = '';
-  newSportType: string = 'Individuel';
+  newSportType: string = 'INDIVIDUAL';
   
-  sportTypes = ['Individuel', 'Collectif', 'Individuel en équipe'];
+  sportTypes = ['INDIVIDUAL', 'COLLECTIVE', 'TEAM_INDIVIDUAL'];
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -35,13 +35,12 @@ export class SportComponent implements OnInit {
 
   addSport() {
     if (this.newSportName.trim() && this.newSportType) {
-      // Backend expects POST /api/sport/{name}/{type}
       const url = `/api/sport/${this.newSportName}/${this.newSportType}`;
       
       this.http.post(url, {}).subscribe({
         next: () => {
           this.newSportName = '';
-          this.loadSports(); // Reload list
+          this.loadSports(); 
         },
         error: (err) => console.error('Error adding sport', err)
       });
