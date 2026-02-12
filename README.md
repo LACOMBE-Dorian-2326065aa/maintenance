@@ -115,19 +115,19 @@ Sport (1..*)
 ### Commandes de Développement
 
 #### Serveur de développement
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Exécutez `ng serve` pour démarrer un serveur de développement. Accédez à `http://localhost:4200/`. L'application se rechargera automatiquement si vous modifiez l'un des fichiers sources.
 
-#### Scaffolding de composants
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Génération de composants
+Exécutez `ng generate component nom-composant` pour générer un nouveau composant. Vous pouvez aussi utiliser `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 #### Build
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Exécutez `ng build` pour compiler le projet. Les artefacts de compilation seront stockés dans le répertoire `dist/`.
 
 #### Tests unitaires
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Exécutez `ng test` pour exécuter les tests unitaires via [Karma](https://karma-runner.github.io).
 
 #### Tests E2E
-Run `ng e2e` to execute the end-to-end tests via [Cypress](https://www.cypress.io/).
+Exécutez `ng e2e` pour exécuter les tests end-to-end via [Cypress](https://www.cypress.io/).
 
 ---
 
