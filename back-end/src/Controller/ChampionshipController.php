@@ -29,7 +29,8 @@ final class ChampionshipController extends AbstractController
 
         $championship = new Championship();
         $championship->setName($name)
-                        ->setSport($sport);
+                        ->setSport($sport)
+        ;
 
         $this->championshipRepository->save($championship, true);
 

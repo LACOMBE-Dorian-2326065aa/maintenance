@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Event;
 use App\Entity\Competition;
+use App\Entity\Event;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +35,8 @@ final class EventController extends AbstractController
 
         $event = new Event();
         $event->setName($name)
-              ->setCompetition($competition);
+              ->setCompetition($competition)
+        ;
 
         $this->em->persist($event);
         $this->em->flush();

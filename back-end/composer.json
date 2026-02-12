@@ -85,7 +85,13 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "test": "phpunit",
+        "test:unit": "phpunit --testsuite=Unit",
+        "test:functional": "phpunit --testsuite=Functional",
+        "test:e2e": "phpunit --testsuite=E2E",
+        "lint": "php-cs-fixer fix --dry-run --diff --allow-risky=yes",
+        "lint:fix": "php-cs-fixer fix --allow-risky=yes"
     },
     "conflict": {
         "symfony/symfony": "*"

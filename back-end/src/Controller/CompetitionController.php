@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Competition;
 use App\Entity\Championship;
+use App\Entity\Competition;
 use App\Repository\CompetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,8 @@ final class CompetitionController extends AbstractController
 
         $competition = new Competition();
         $competition->setName($name)
-                    ->setChampionship($championship);
+                    ->setChampionship($championship)
+        ;
 
         $this->competitionRepository->save($competition, true);
 

@@ -22,9 +22,8 @@ final class SportController extends AbstractController
     #[Route('/{name}/{type}', name: 'create_sport', methods: ['POST'])]
     public function createSport(
         string $name,
-        string $type
-    ): Response
-    {
+        string $type,
+    ): Response {
         $existingSport = $this->sportRepository->findOneBy(['name' => $name]);
         if ($existingSport) {
             return $this->json(['message' => 'Sport already exists'], Response::HTTP_CONFLICT);
@@ -37,7 +36,8 @@ final class SportController extends AbstractController
 
         $sport = new Sport();
         $sport->setName($name)
-                ->setType($sportType);
+                ->setType($sportType)
+        ;
 
         $this->sportRepository->save($sport, true);
 
@@ -46,9 +46,8 @@ final class SportController extends AbstractController
 
     #[Route('/{sport}', name: 'get_sport', methods: ['GET'])]
     public function getSport(
-        Sport $sport
-    ): Response
-    {
+        Sport $sport,
+    ): Response {
         return $this->json([
             'id' => $sport->getId(),
             'name' => $sport->getName(),
@@ -77,16 +76,16 @@ final class SportController extends AbstractController
     public function updateSport(
         Sport $sport,
         string $newName,
-        string $newType
-    ): Response
-    {
+        string $newType,
+    ): Response {
         if (!in_array($newType, array_column(SportTypeEnum::cases(), 'value'))) {
             return $this->json(['message' => 'Invalid sport type'], Response::HTTP_BAD_REQUEST);
         }
         $sportType = SportTypeEnum::from($newType);
 
         $sport->setName($newName)
-                ->setType($sportType);
+                ->setType($sportType)
+        ;
 
         $this->sportRepository->save($sport, true);
 
@@ -95,9 +94,8 @@ final class SportController extends AbstractController
 
     #[Route('/{sport}', name: 'delete_sport', methods: ['DELETE'])]
     public function deleteSport(
-        Sport $sport
-    ): Response
-    {
+        Sport $sport,
+    ): Response {
         $this->sportRepository->remove($sport, true);
 
         return $this->json(['message' => 'Sport deleted successfully'], Response::HTTP_OK);
