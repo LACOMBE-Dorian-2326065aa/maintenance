@@ -4,6 +4,21 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+interface SportEvent {
+  id: number;
+  name: string;
+}
+
+interface Competition {
+  id: number;
+  name: string;
+  events_count: number; // or string if api returns string
+  expanded?: boolean;
+  isAddingEvent?: boolean;
+  newEventName?: string;
+  events?: SportEvent[];
+}
+
 @Component({
   selector: 'app-liste-competition',
   standalone: true,
@@ -13,7 +28,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListeCompetitionComponent implements OnInit {
   championshipId: number | null = null;
-  competitions: any[] = [];
+  competitions: Competition[] = [];
   
   // For adding new
   isAdding = false;
@@ -41,7 +56,7 @@ export class ListeCompetitionComponent implements OnInit {
 
   loadCompetitions() {
     if (!this.championshipId) return;
-    this.http.get<any[]>(`/api/competition/championship/${this.championshipId}`).subscribe({
+    this.http.get<Competition[]>(`/api/competition/championship/${this.championshipId}`).subscribe({
       next: (data) => {
         this.competitions = data;
       },
@@ -72,7 +87,7 @@ export class ListeCompetitionComponent implements OnInit {
     });
   }
 
-  startEdit(item: any, event: Event) {
+  startEdit(item: Competition, event: Event) {
     event.stopPropagation();
     this.editingId = item.id;
     this.editName = item.name;
@@ -84,7 +99,7 @@ export class ListeCompetitionComponent implements OnInit {
     this.editName = '';
   }
 
-  saveEdit(item: any, event: Event) {
+  saveEdit(item: Competition, event: Event) {
     event.stopPropagation();
     if (!this.editName.trim()) return;
 
@@ -100,7 +115,7 @@ export class ListeCompetitionComponent implements OnInit {
   }
 
   // Expansion Logic
-  toggleDetails(competition: any, event?: Event) {
+  toggleDetails(competition: Competition, event?: Event) {
     if (this.editingId !== null) return; // Don't toggle if editing title
     if (event) {
       // If clicking inside the expansion panel shouldn't close it, handle propagation carefully in HTML
@@ -115,8 +130,8 @@ export class ListeCompetitionComponent implements OnInit {
     }
   }
 
-  loadEvents(competition: any) {
-    this.http.get<any[]>(`/api/event/competition/${competition.id}`).subscribe({
+  loadEvents(competition: Competition) {
+    this.http.get<SportEvent[]>(`/api/event/competition/${competition.id}`).subscribe({
       next: (data) => {
         competition.events = data;
       },
@@ -125,18 +140,18 @@ export class ListeCompetitionComponent implements OnInit {
   }
 
   // Event Management inside Competition
-  startAddEvent(competition: any, event: Event) {
+  startAddEvent(competition: Competition, event: Event) {
     event.stopPropagation();
     competition.isAddingEvent = true;
     competition.newEventName = '';
   }
 
-  cancelAddEvent(competition: any) {
+  cancelAddEvent(competition: Competition) {
     competition.isAddingEvent = false;
     competition.newEventName = '';
   }
 
-  saveNewEvent(competition: any) {
+  saveNewEvent(competition: Competition) {
     if (!competition.newEventName?.trim()) return;
     
     // API: POST /api/event/{name}/{competition}
@@ -156,7 +171,7 @@ export class ListeCompetitionComponent implements OnInit {
   }
 
   // Edit Event
-  startEditEvent(eventItem: any, event: Event) {
+  startEditEvent(eventItem: SportEvent, event: Event) {
     event.stopPropagation();
     this.editingId = eventItem.id; // Global editingId can be reused if unique across all IDs or use a composite
     // Warning: editingId is number, IDs might collide between competition and event if generated sequentially global or table specific?
@@ -167,7 +182,7 @@ export class ListeCompetitionComponent implements OnInit {
   editingEventId: number | null = null;
   editEventName = '';
 
-  enableEditEvent(eventItem: any) {
+  enableEditEvent(eventItem: SportEvent) {
     this.editingEventId = eventItem.id;
     this.editEventName = eventItem.name;
   }
@@ -177,7 +192,7 @@ export class ListeCompetitionComponent implements OnInit {
     this.editEventName = '';
   }
 
-  saveEditEvent(eventItem: any) {
+  saveEditEvent(eventItem: SportEvent) {
     if (!this.editEventName.trim()) return;
 
     // API: PUT /api/event/{id}/{newName}
@@ -192,7 +207,7 @@ export class ListeCompetitionComponent implements OnInit {
     });
   }
   
-  deleteEvent(eventItem: any, competition: any) {
+  deleteEvent(eventItem: SportEvent, competition: Competition) {
     if(!confirm('Supprimer cette épreuve ?')) return;
     
     // API: DELETE /api/event/{event}

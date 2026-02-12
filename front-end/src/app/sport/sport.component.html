@@ -2,7 +2,14 @@
   <h2>Liste des Sports</h2>
 
   <div class="sport-list">
-    <div *ngFor="let sport of sports" class="sport-card" (click)="goToChampionships(sport.id)">
+    <div 
+        *ngFor="let sport of sports" 
+        class="sport-card" 
+        (click)="goToChampionships(sport.id)"
+        (keyup.enter)="goToChampionships(sport.id)"
+        tabindex="0"
+        role="button"
+    >
       <h3>{{ sport.name }}</h3>
       <span class="badge">{{ sport.type }}</span>
     </div>

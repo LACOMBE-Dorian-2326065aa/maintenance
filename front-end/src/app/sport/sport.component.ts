@@ -4,6 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+interface Sport {
+  id: number;
+  name: string;
+  type: string;
+}
+
 @Component({
   selector: 'app-sport',
   standalone: true,
@@ -12,9 +18,9 @@ import { Router } from '@angular/router';
   styleUrl: './sport.component.scss'
 })
 export class SportComponent implements OnInit {
-  sports: any[] = [];
-  newSportName: string = '';
-  newSportType: string = 'INDIVIDUAL';
+  sports: Sport[] = [];
+  newSportName = '';
+  newSportType = 'INDIVIDUAL';
   
   sportTypes = ['INDIVIDUAL', 'COLLECTIVE', 'TEAM_INDIVIDUAL'];
 
@@ -25,7 +31,7 @@ export class SportComponent implements OnInit {
   }
 
   loadSports() {
-    this.http.get<any[]>('/api/sport').subscribe({
+    this.http.get<Sport[]>('/api/sport').subscribe({
       next: (data) => {
         this.sports = data;
       },

@@ -14,7 +14,14 @@
   </div>
 
   <div class="list" *ngIf="championships.length > 0; else noData">
-    <div class="card app-card list-item" *ngFor="let champ of championships" (click)="goToCompetitions(champ.id)">
+    <div 
+      class="card app-card list-item" 
+      *ngFor="let champ of championships" 
+      (click)="goToCompetitions(champ.id)"
+      (keyup.enter)="goToCompetitions(champ.id)"
+      tabindex="0"
+      role="button"
+    >
       <div class="item-content" *ngIf="editingId !== champ.id">
         <span class="item-name">{{ champ.name }}</span>
         <div class="item-meta">{{ champ.competitions_count }} compétitions</div>

@@ -4,6 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+interface SportEvent {
+  id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-liste-epreuve',
   standalone: true,
@@ -13,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListeEpreuveComponent implements OnInit {
   competitionId: number | null = null;
-  events: any[] = [];
+  events: SportEvent[] = [];
   
   isAdding = false;
   newName = '';
@@ -39,7 +44,7 @@ export class ListeEpreuveComponent implements OnInit {
 
   loadEvents() {
     if (!this.competitionId) return;
-    this.http.get<any[]>(`/api/event/competition/${this.competitionId}`).subscribe({
+    this.http.get<SportEvent[]>(`/api/event/competition/${this.competitionId}`).subscribe({
       next: (data) => {
         this.events = data;
       },
@@ -71,7 +76,7 @@ export class ListeEpreuveComponent implements OnInit {
     });
   }
 
-  startEdit(item: any, event: Event) {
+  startEdit(item: SportEvent, event: Event) {
     event.stopPropagation();
     this.editingId = item.id;
     this.editName = item.name;
@@ -83,7 +88,7 @@ export class ListeEpreuveComponent implements OnInit {
     this.editName = '';
   }
 
-  saveEdit(item: any, event: Event) {
+  saveEdit(item: SportEvent, event: Event) {
     event.stopPropagation();
     if (!this.editName.trim()) return;
 

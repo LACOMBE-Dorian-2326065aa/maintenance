@@ -4,6 +4,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+interface Championship {
+  id: number;
+  name: string;
+  competitions_count: number;
+}
+
 @Component({
   selector: 'app-liste-championnat',
   standalone: true,
@@ -13,7 +19,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListeChampionnatComponent implements OnInit {
   sportId: number | null = null;
-  championships: any[] = [];
+  championships: Championship[] = [];
   
   // For adding new
   isAdding = false;
@@ -41,7 +47,7 @@ export class ListeChampionnatComponent implements OnInit {
 
   loadChampionships() {
     if (!this.sportId) return;
-    this.http.get<any[]>(`/api/championship/sport/${this.sportId}`).subscribe({
+    this.http.get<Championship[]>(`/api/championship/sport/${this.sportId}`).subscribe({
       next: (data) => {
         this.championships = data;
       },
@@ -74,7 +80,7 @@ export class ListeChampionnatComponent implements OnInit {
     });
   }
 
-  startEdit(championship: any, event: Event) {
+  startEdit(championship: Championship, event: Event) {
     event.stopPropagation();
     this.editingId = championship.id;
     this.editName = championship.name;
@@ -86,7 +92,7 @@ export class ListeChampionnatComponent implements OnInit {
     this.editName = '';
   }
 
-  saveEdit(championship: any, event: Event) {
+  saveEdit(championship: Championship, event: Event) {
     event.stopPropagation();
     if (!this.editName.trim()) return;
 

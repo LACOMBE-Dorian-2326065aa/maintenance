@@ -17,7 +17,14 @@
     <div class="card app-card list-item-wrapper" *ngFor="let item of competitions">
       
       <!-- Competition Row -->
-      <div class="list-item" (click)="toggleDetails(item, $event)" [class.expanded]="item.expanded">
+      <div 
+        class="list-item" 
+        (click)="toggleDetails(item, $event)" 
+        (keyup.enter)="toggleDetails(item, $event)"
+        [class.expanded]="item.expanded"
+        tabindex="0"
+        role="button"
+      >
         <div class="item-content" *ngIf="editingId !== item.id">
           <span class="chevron" [class.rotated]="item.expanded">▶</span>
           <span class="item-name">{{ item.name }}</span>
@@ -39,7 +46,14 @@
       </div>
 
       <!-- Events Expansion Panel -->
-      <div class="events-panel" *ngIf="item.expanded" (click)="$event.stopPropagation()">
+      <div 
+        class="events-panel" 
+        *ngIf="item.expanded" 
+        (click)="$event.stopPropagation()"
+        (keyup.enter)="$event.stopPropagation()"
+        tabindex="-1"
+        role="presentation"
+      >
         
         <div class="events-header">
             <h4>Épreuves</h4>

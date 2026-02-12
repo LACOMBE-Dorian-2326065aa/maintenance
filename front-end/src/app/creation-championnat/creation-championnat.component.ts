@@ -25,10 +25,10 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatRadioModule,
     MatFormFieldModule
   ],
-  templateUrl: './creation-championnat.html',
-  styleUrl: './creation-championnat.scss',
+  templateUrl: './creation-championnat.component.html',
+  styleUrl: './creation-championnat.component.scss',
 })
-export class CreationChampionnat implements OnInit {
+export class CreationChampionnatComponent implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   private router = inject(Router);

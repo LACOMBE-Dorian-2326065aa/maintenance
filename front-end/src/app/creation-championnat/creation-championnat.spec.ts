@@ -1,23 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreationChampionnat } from './creation-championnat';
+import { CreationChampionnatComponent } from './creation-championnat.component';
 
-describe('CreationChampionnat', () => {
-  let component: CreationChampionnat;
-  let fixture: ComponentFixture<CreationChampionnat>;
+describe('CreationChampionnatComponent', () => {
+  let component: CreationChampionnatComponent;
+  let fixture: ComponentFixture<CreationChampionnatComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreationChampionnat]
+      imports: [CreationChampionnatComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreationChampionnat);
+    fixture = TestBed.createComponent(CreationChampionnatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (expect(component) as any).toBeTruthy();
   });
 });
