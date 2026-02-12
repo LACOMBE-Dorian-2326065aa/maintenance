@@ -1,0 +1,65 @@
+// Imports from global styles are automatic for generic elements
+// Specific overrides for sport component
+
+.sport-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+.sport-card {
+  // Inherits .card styles from styles.scss but needs width constraint
+  width: 250px; 
+  cursor: pointer;
+  text-align: center;
+  
+  h3 {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: #00008b; // $primary-color
+  }
+
+  .badge {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-top: 10px;
+  }
+}
+
+.add-sport-form {
+  border-top: 2px solid #f0f0f0;
+  padding-top: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  
+  h3 {
+      text-align: center;
+      margin-bottom: 25px;
+  }
+
+  button {
+      width: 100%;
+      background-color: #28a745; // specific green for add action
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1.1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      
+      &:hover {
+          background-color: #218838;
+      }
+      
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+  }
+}

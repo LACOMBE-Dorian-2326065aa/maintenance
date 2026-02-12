@@ -1,1 +1,278 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the theme object.
+$front-end-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Shared Styles inspired by creation-championnat
+$primary-color: #00008b;
+$background-light: #f8f9fa;
+$border-color: #e0e0e0;
+$text-color: #333;
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: $text-color;
+  background-color: #fafafa;
+}
+
+.container {
+  padding: 40px 20px;
+  max-width: 1200px; /* equivalent to roughly 80% on large screens but constrained */
+  margin: 0 auto;
+}
+
+h2 {
+  color: $primary-color;
+  font-weight: 300;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+  border-bottom: 2px solid rgba($primary-color, 0.1);
+  padding-bottom: 15px;
+}
+
+h3 {
+  color: #444;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Generic Card Style mimicking mat-card */
+.app-card, .sport-card, .card {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid $border-color;
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* Button Styles */
+button, .btn {
+  &.primary {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+    }
+  }
+  
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* Form Styles */
+input[type="text"], select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; 
+  font-size: 1rem;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: 500;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* List CRUD Styles */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.add-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+.btn-save {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-item {
+  display: flex !important; /* Override standard card display if needed */
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  
+  .item-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex: 1;
+    color: #333;
+  }
+
+  .item-meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-right: 20px;
+  }
+}
+
+.item-edit {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  
+  input {
+    flex: 1;
+    margin: 0;
+    padding: 5px 10px;
+  }
+  
+  .edit-actions {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #e9ecef;
+    color: $primary-color;
+  }
+  
+  &.save {
+    color: #28a745;
+  }
+  
+  &.cancel {
+    color: #dc3545;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 40px;
+}
+
+.back-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($front-end-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($front-end-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($front-end-theme);
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

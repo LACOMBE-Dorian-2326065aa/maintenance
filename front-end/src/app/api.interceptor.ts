@@ -1,0 +1,15 @@
+import { HttpInterceptorFn } from '@angular/common/http';
+
+export const apiInterceptor: HttpInterceptorFn = (req, next) => {
+  const baseUrl = 'http://localhost:8000';
+  
+  // Only prepend base URL if request URL is relative (starts with /)
+  if (req.url.startsWith('/')) {
+    const apiReq = req.clone({
+      url: `${baseUrl}${req.url}`
+    });
+    return next(apiReq);
+  }
+  
+  return next(req);
+};

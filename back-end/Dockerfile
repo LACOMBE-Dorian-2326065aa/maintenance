@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 # Install system dependencies
 RUN apk add --no-cache \
@@ -25,10 +25,11 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash && \
 WORKDIR /app
 
 # Copy composer files
-COPY composer.json composer.lock* ./
+COPY composer.json composer.lock ./
 
 # Install dependencies
-RUN composer install --no-interaction --no-scripts
+RUN composer install --no-interaction --no-scripts --ignore-platform-reqs || \
+    composer install --no-interaction --no-scripts
 
 # Copy application
 COPY . .
@@ -38,4 +39,4 @@ RUN mkdir -p var && chmod -R 777 var
 
 EXPOSE 8000
 
-CMD ["symfony", "serve", "--no-tls", "--allow-http", "--port=8000"]
+CMD ["symfony", "serve", "--no-tls", "--allow-http", "--listen-ip=0.0.0.0", "--port=8000"]

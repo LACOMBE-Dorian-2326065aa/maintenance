@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Championnats</h2>
+
+  <div class="actions">
+    <button class="primary" *ngIf="!isAdding" (click)="startAdd()">+ Ajouter un championnat</button>
+  </div>
+
+  <div class="add-form" *ngIf="isAdding">
+    <input type="text" [(ngModel)]="newChampionshipName" placeholder="Nom du championnat" (keyup.enter)="saveNew()">
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="cancelAdd()">Annuler</button>
+      <button class="btn-save" (click)="saveNew()" [disabled]="!newChampionshipName">Enregistrer</button>
+    </div>
+  </div>
+
+  <div class="list" *ngIf="championships.length > 0; else noData">
+    <div 
+      class="card app-card list-item" 
+      *ngFor="let champ of championships" 
+      (click)="goToCompetitions(champ.id)"
+      (keyup.enter)="goToCompetitions(champ.id)"
+      tabindex="0"
+      role="button"
+    >
+      <div class="item-content" *ngIf="editingId !== champ.id">
+        <span class="item-name">{{ champ.name }}</span>
+        <div class="item-meta">{{ champ.competitions_count }} compétitions</div>
+        <button class="btn-icon" (click)="startEdit(champ, $event)" title="Modifier">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="item-edit" *ngIf="editingId === champ.id">
+        <input type="text" [(ngModel)]="editName" (click)="$event.stopPropagation()" (keyup.enter)="saveEdit(champ, $event)">
+        <div class="edit-actions">
+          <button class="btn-icon save" (click)="saveEdit(champ, $event)" title="Valider">✓</button>
+          <button class="btn-icon cancel" (click)="cancelEdit($event)" title="Annuler">✕</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p class="empty-state">Aucun championnat pour ce sport.</p>
+  </ng-template>
+
+  <br>
+  <a routerLink="/sports" class="back-link">← Retour aux sports</a>
+</div>

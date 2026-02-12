@@ -15,7 +15,7 @@ services:
       - ./back-end:/app
       - /app/vendor
     working_dir: /app
-    command: symfony serve --no-tls --allow-http
+    command: symfony serve --no-tls --allow-http --allow-all-ip
     networks:
       - maintenance_network
     depends_on:
